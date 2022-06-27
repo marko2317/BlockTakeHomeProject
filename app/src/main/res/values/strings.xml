@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Square Employee Directory</string>
+    <string name="menu_action_refresh">Refresh</string>
+    <string name="menu_action_empty_list">Empty List</string>
+    <string name="menu_action_malformed_list">Malformed List</string>
+    <string name="menu_action_network_error">Network Error</string>
+    <string name="empty_state_message">There are 0 entries for the directory</string>
+</resources>
