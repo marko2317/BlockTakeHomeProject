@@ -1,5 +1,6 @@
 package com.example.directorytakehomeproject.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -98,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             val linearLayoutManager = LinearLayoutManager(this@MainActivity)
             layoutManager = linearLayoutManager
             adapter =
-                DirectoryAdapter(directory as DirectoryDataModel.SuccessDataModel)
+                    DirectoryAdapter(directory as DirectoryDataModel.SuccessDataModel, viewModel)
             visibility = View.VISIBLE
         }
     }
@@ -112,6 +113,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleSideEffect(sideEffect: DirectorySideEffect) {
+        if (sideEffect is DirectorySideEffect.EmployeeSummary) {
+            val intent = Intent(this, EmployeeSummaryActivity::class.java).apply {
+                putExtra(EMPLOYEE_BUNDLE_KEY, sideEffect.employee)
+            }
 
+            startActivity(intent)
+        }
     }
 }

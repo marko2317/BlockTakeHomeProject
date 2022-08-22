@@ -28,7 +28,7 @@ data class DirectoryResponse(
         val employeeType: EmployeeType? = null
     )
 
-    enum class EmployeeType {
-        FULL_TIME, PART_TIME, CONTRACTOR
+    enum class EmployeeType(val type: String) {
+        FULL_TIME("Full Time"), PART_TIME("Part Time"), CONTRACTOR("Contractor")
     }
 }

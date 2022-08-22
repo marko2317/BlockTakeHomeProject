@@ -12,14 +12,15 @@ import com.example.directorytakehomeproject.databinding.EmployeeViewHolderBindin
 import com.example.directorytakehomeproject.domain.DirectoryDataModel
 
 class DirectoryAdapter(
-    var dataModel: DirectoryDataModel.SuccessDataModel
+        var dataModel: DirectoryDataModel.SuccessDataModel,
+        val interactions: Interactions
 ) : RecyclerView.Adapter<DirectoryAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.employee_view_holder, parent, false)
+                .inflate(R.layout.employee_view_holder, parent, false)
 
-        return ViewHolder(view)
+        return ViewHolder(view, interactions)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -28,7 +29,7 @@ class DirectoryAdapter(
 
     override fun getItemCount() = dataModel.employeesList.size
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, val interactions: Interactions) : RecyclerView.ViewHolder(view) {
         private val binding = DataBindingUtil.bind<EmployeeViewHolderBinding>(view)
 
         fun bindEmployee(employee: DirectoryDataModel.SuccessDataModel.EmployeeDataModel) {
@@ -41,6 +42,13 @@ class DirectoryAdapter(
                 transformations(RoundedCornersTransformation())
                 placeholder(android.R.drawable.ic_dialog_alert)
             }
+            binding?.container?.setOnClickListener {
+                interactions.onEmployeeClicked(employee)
+            }
         }
+    }
+
+    interface Interactions {
+        fun onEmployeeClicked(employee: DirectoryDataModel.SuccessDataModel.EmployeeDataModel)
     }
 }
