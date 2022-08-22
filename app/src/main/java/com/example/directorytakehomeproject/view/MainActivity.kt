@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel.observe(state = ::render, sideEffect = ::handleSideEffect, lifecycleOwner = this)
+        viewModel.fetchData(ApiCallType.LOAD_FULL_DIRECTORY, this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -36,15 +37,15 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_refresh -> {
-                viewModel.fetchData(ApiCallType.LOAD_FULL_DIRECTORY)
+                viewModel.fetchData(ApiCallType.LOAD_FULL_DIRECTORY, this)
                 true
             }
             R.id.action_empty_list -> {
-                viewModel.fetchData(ApiCallType.LOAD_EMPTY_DIRECTORY)
+                viewModel.fetchData(ApiCallType.LOAD_EMPTY_DIRECTORY, this)
                 true
             }
             R.id.action_malformed_list -> {
-                viewModel.fetchData(ApiCallType.LOAD_MALFORMED_DIRECTORY)
+                viewModel.fetchData(ApiCallType.LOAD_MALFORMED_DIRECTORY, this)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -98,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             val linearLayoutManager = LinearLayoutManager(this@MainActivity)
             layoutManager = linearLayoutManager
             adapter =
-                DirectoryAdapter(directory as DirectoryDataModel.SuccessDataModel)
+                    DirectoryAdapter(directory as DirectoryDataModel.SuccessDataModel)
             visibility = View.VISIBLE
         }
     }
